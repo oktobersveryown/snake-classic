@@ -1,0 +1,4 @@
+const GRID_SIZE = 20;
+const INITIAL_SPEED = 200;
+const SPEED_INCREMENT = -15;
+const SPEED_RAMP_THRESHOLD = 7;
