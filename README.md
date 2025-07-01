@@ -18,8 +18,8 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
 ## How to Run
 
 1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/your-username/your-repo-name.git
+    ```fish
+    git clone https://github.com/oktobersveryown/snake-classic.git
     cd your-repo-name
     ```
 2.  **Create and activate a virtual environment:**
