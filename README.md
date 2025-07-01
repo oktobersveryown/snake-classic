@@ -18,7 +18,7 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
 ## How to Run
 
 1.  **Clone the repository:**
-    ```fish
+    ```bash
     git clone https://github.com/oktobersveryown/snake-classic.git
     cd your-repo-name
     ```
@@ -27,12 +27,24 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
     python -m venv venv
     source venv/bin/activate
     ```
-3.  **Install the dependencies:**
+    or
+
+    ```fish
+    python -m venv venv
+    source venv/bin/activate.fish
+    ```
+    or
+    ```ps1
+    python -m venv venv
+    .\venv\bin\activate.ps1
+    ```
+    
+4.  **Install the dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
-4.  **Run the application:**
+5.  **Run the application:**
     ```bash
     flask run
     ```
-5.  **Open your browser and go to `http://127.0.0.1:5000` to play.**
+6.  **Open your browser and go to `http://127.0.0.1:5000` to play.**
