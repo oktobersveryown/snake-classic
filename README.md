@@ -28,6 +28,7 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
 - [ ] **Sound Effects:** Add sound effects for eating food, game over, and other events.
 - [ ] **Visual Effects:** Implement visual effects like screen shake or particle effects to enhance the player experience.
 - [x] **Snake Assets:** Add custom graphics or sprites for the snake.
+    -[ ] **Body Code** work body code when snake is turning currently hacky, would take a minute but ZESCO
 - [ ] **Fruit Assets:** Add fruit assets for the fruit, super fruit and bomb.
 - [ ] **Speed Scaling:** Adjust speed to scale up faster for a more challenging experience.
 - [ ] **Snake Color Options:** Allow players to choose their snake color before starting the game.
