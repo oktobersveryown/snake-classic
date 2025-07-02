@@ -1,4 +1,12 @@
 const GRID_SIZE = 20;
+const WALL_THICKNESS = 2;
 const INITIAL_SPEED = 200;
-const SPEED_INCREMENT = -15;
-const SPEED_RAMP_THRESHOLD = 7;
+const SPEED_INCREMENT = -25;
+const FRUITS_PER_LEVEL = 5;
+const LEVELS_PER_SPEED_INCREASE = 3;
+
+const FRUIT_TYPES = {
+    APPLE: { color: '#e74c3c', score: 1, length: 1 },
+    ROTTEN_APPLE: { color: '#000000', score: -2, length: -2 },
+    SPECIAL_APPLE: { color: '#ff69b4', score: 4, length: 4 }
+};

@@ -1,8 +1,10 @@
 const gameState = {
     snake: [],
-    food: {},
+    foods: [],
     direction: 'right',
     score: 0,
+    level: 1,
+    lastSpeedIncreaseLevel: 1,
     gameOver: false,
     gameInterval: null,
     speed: INITIAL_SPEED,
@@ -17,10 +19,15 @@ function startGame() {
 }
 
 function resetGame() {
+    const directions = ['up', 'down', 'left', 'right'];
+    const randomDirection = directions[Math.floor(Math.random() * directions.length)];
+
     gameState.snake = [{ x: 10, y: 10 }];
-    gameState.food = {};
-    gameState.direction = 'right';
+    gameState.foods = [];
+    gameState.direction = randomDirection;
     gameState.score = 0;
+    gameState.level = 1;
+    gameState.lastSpeedIncreaseLevel = 1;
     gameState.gameOver = false;
     gameState.paused = false;
     gameState.speed = INITIAL_SPEED;
@@ -30,17 +37,53 @@ function resetGame() {
 
 function generateFood() {
     const canvas = document.getElementById('gameCanvas');
-    gameState.food = {
-        x: Math.floor(Math.random() * (canvas.width / GRID_SIZE)),
-        y: Math.floor(Math.random() * (canvas.height / GRID_SIZE))
+    const gridSizeX = canvas.width / GRID_SIZE;
+    const gridSizeY = canvas.height / GRID_SIZE;
+    gameState.foods = []; // Clear existing food
+
+    const createFood = (type) => {
+        let food;
+        do {
+            food = {
+                x: Math.floor(Math.random() * (gridSizeX - 2 * WALL_THICKNESS)) + WALL_THICKNESS,
+                y: Math.floor(Math.random() * (gridSizeY - 2 * WALL_THICKNESS)) + WALL_THICKNESS,
+                type: type
+            };
+        } while (isFoodOnSnake(food) || isFoodOnFood(food));
+        return food;
     };
-    // Ensure food doesn't spawn on the snake
+
+    if (gameState.level >= 5) {
+        // Level 5+: Special apple pair is now much rarer (12.5% chance)
+        if (Math.random() > 0.125) {
+            gameState.foods.push(createFood(FRUIT_TYPES.APPLE));
+            gameState.foods.push(createFood(FRUIT_TYPES.ROTTEN_APPLE));
+        } else {
+            gameState.foods.push(createFood(FRUIT_TYPES.APPLE));
+            gameState.foods.push(createFood(FRUIT_TYPES.SPECIAL_APPLE));
+        }
+    } else {
+        // Levels 1-4: Only red apples
+        gameState.foods.push(createFood(FRUIT_TYPES.APPLE));
+    }
+}
+
+function isFoodOnSnake(food) {
     for (let i = 0; i < gameState.snake.length; i++) {
-        if (gameState.food.x === gameState.snake[i].x && gameState.food.y === gameState.snake[i].y) {
-            generateFood();
-            return;
+        if (food.x === gameState.snake[i].x && food.y === gameState.snake[i].y) {
+            return true;
         }
     }
+    return false;
+}
+
+function isFoodOnFood(newFood) {
+    for (const existingFood of gameState.foods) {
+        if (newFood.x === existingFood.x && newFood.y === existingFood.y) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function update() {
@@ -64,28 +107,60 @@ function update() {
 
     gameState.snake.unshift(head);
 
-    if (head.x === gameState.food.x && head.y === gameState.food.y) {
-        gameState.score++;
-        gameState.fruitsEaten++;
-        if (gameState.fruitsEaten % SPEED_RAMP_THRESHOLD === 0) {
-            gameState.speed = Math.max(50, gameState.speed + SPEED_INCREMENT);
-            clearInterval(gameState.gameInterval);
-            gameState.gameInterval = setInterval(update, gameState.speed);
+    let ateFood = false;
+    for (let i = 0; i < gameState.foods.length; i++) {
+        const food = gameState.foods[i];
+        if (head.x === food.x && head.y === food.y) {
+            const fruit = food.type;
+            gameState.score += fruit.score;
+            gameState.fruitsEaten++;
+            
+            const oldLevel = gameState.level;
+            gameState.level = Math.floor(gameState.fruitsEaten / FRUITS_PER_LEVEL) + 1;
+
+            if (gameState.level > oldLevel && gameState.level >= gameState.lastSpeedIncreaseLevel + LEVELS_PER_SPEED_INCREASE) {
+                gameState.speed = Math.max(50, gameState.speed + SPEED_INCREMENT);
+                gameState.lastSpeedIncreaseLevel = gameState.level;
+                clearInterval(gameState.gameInterval);
+                gameState.gameInterval = setInterval(update, gameState.speed);
+            }
+
+            if (fruit.length > 0) {
+                for (let j = 0; j < fruit.length - 1; j++) {
+                    gameState.snake.push({});
+                }
+            } else if (fruit.length < 0) {
+                for (let j = 0; j < Math.abs(fruit.length); j++) {
+                    if (gameState.snake.length > 1) {
+                        gameState.snake.pop();
+                    }
+                }
+            }
+            
+            generateFood(); // Generate new food
+            ateFood = true;
+            break; 
         }
-        generateFood();
-    } else {
+    }
+
+    if (!ateFood) {
         gameState.snake.pop();
     }
 
-    draw(gameState.snake, gameState.food, gameState.score);
+    draw(gameState.snake, gameState.foods, gameState.score, gameState.level);
 }
 
 function isCollision(head) {
     const canvas = document.getElementById('gameCanvas');
+    const gridSizeX = canvas.width / GRID_SIZE;
+    const gridSizeY = canvas.height / GRID_SIZE;
+
     // Wall collision
-    if (head.x < 0 || head.x >= canvas.width / GRID_SIZE || head.y < 0 || head.y >= canvas.height / GRID_SIZE) {
+    if (head.x < WALL_THICKNESS || head.x >= gridSizeX - WALL_THICKNESS ||
+        head.y < WALL_THICKNESS || head.y >= gridSizeY - WALL_THICKNESS) {
         return true;
     }
+
     // Self collision
     for (let i = 1; i < gameState.snake.length; i++) {
         if (head.x === gameState.snake[i].x && head.y === gameState.snake[i].y) {

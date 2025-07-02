@@ -12,9 +12,21 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
 
 ## Future Plans
 
-*   **Design:** Make the frame look like a brick 🧱 wall.
-*   **Sound Effects:** Add sound effects for eating food, game over, and other events.
-*   **Visual Effects:** Implement visual effects like screen shake or particle effects to enhance the player experience.
+- [x] **Design:** Make the frame look like a brick 🧱 wall with alternating colors.
+- [x] **Gameplay:**
+    - [x] Separate level from score.
+    - [x] Display level in the top-right corner.
+    - [x] Increase speed every 3 levels.
+    - [x] Snake starts in a random direction.
+- [x] **Fruit Variety:**
+    - [x] Add different fruits with unique effects:
+        - 🍎 **Apple (Red):** Standard fruit, snake grows by 1.
+        - ⚫ **Rotten Apple (Black):** Reduces snake length by 2 and score by 2.
+        - 🌸 **Special Apple (Pink):** Snake grows by 4, appears rarely.
+    - [x] Implement multiple fruit drops (e.g., two at a time).
+    - [x] Allow players to choose between two different fruits at higher levels (e.g., starting at level 5).
+- [ ] **Sound Effects:** Add sound effects for eating food, game over, and other events.
+- [ ] **Visual Effects:** Implement visual effects like screen shake or particle effects to enhance the player experience.
 
 ## How to Run
 

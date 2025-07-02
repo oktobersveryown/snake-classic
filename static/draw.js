@@ -1,7 +1,30 @@
-function draw(snake, food, score) {
+function draw(snake, foods, score, level) {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw wall with alternating brick pattern
+    const lightBrick = '#A0522D'; // Sienna
+    const darkBrick = '#8B4513'; // SaddleBrown
+    for (let x = 0; x < canvas.width / GRID_SIZE; x++) {
+        for (let y = 0; y < canvas.height / GRID_SIZE; y++) {
+            if (x < WALL_THICKNESS || x >= canvas.width / GRID_SIZE - WALL_THICKNESS ||
+                y < WALL_THICKNESS || y >= canvas.height / GRID_SIZE - WALL_THICKNESS) {
+                
+                // Create a checkerboard pattern
+                if ((x + y) % 2 === 0) {
+                    ctx.fillStyle = lightBrick;
+                } else {
+                    ctx.fillStyle = darkBrick;
+                }
+                
+                ctx.fillRect(x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+                // Add a darker stroke for mortar
+                ctx.strokeStyle = '#5A2D0C';
+                ctx.strokeRect(x * GRID_SIZE, y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+            }
+        }
+    }
 
     // Draw snake
     for (let i = 0; i < snake.length; i++) {
@@ -11,16 +34,57 @@ function draw(snake, food, score) {
         ctx.strokeRect(snake[i].x * GRID_SIZE, snake[i].y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
     }
 
-    // Draw food
-    ctx.fillStyle = '#e74c3c'; // Red
-    ctx.fillRect(food.x * GRID_SIZE, food.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+    // Draw foods
+    for (const food of foods) {
+        ctx.fillStyle = food.type.color;
+        ctx.fillRect(food.x * GRID_SIZE, food.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+    }
 
     // Draw score
     ctx.fillStyle = 'white';
-    ctx.font = '20px Arial';
-    ctx.textAlign = 'left';
+    ctx.textAlign = 'center';
     ctx.textBaseline = 'top';
-    ctx.fillText('Score: ' + score, 10, 10);
+
+    // Draw "Score: " text
+    ctx.font = '20px Arial';
+    const scoreText = 'Score: ';
+    const scoreTextWidth = ctx.measureText(scoreText).width;
+    
+    // Draw score number
+    ctx.font = '28px Arial';
+    const scoreNumWidth = ctx.measureText(score).width;
+    
+    const totalWidth = scoreTextWidth + scoreNumWidth;
+    const startX = (canvas.width - totalWidth) / 2;
+
+    ctx.font = '20px Arial';
+    ctx.fillText(scoreText, startX + scoreTextWidth / 2, 10);
+    
+    ctx.font = '28px Arial';
+    ctx.fillText(score, startX + scoreTextWidth + scoreNumWidth / 2, 6);
+
+    // Draw level
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'top';
+
+    // Draw "Level: " text
+    ctx.font = '20px Arial';
+    const levelText = 'Level: ';
+    const levelTextWidth = ctx.measureText(levelText).width;
+
+    // Draw level number
+    ctx.font = '28px Arial';
+    const levelNumWidth = ctx.measureText(level).width;
+
+    const totalLevelWidth = levelTextWidth + levelNumWidth;
+    const levelStartX = canvas.width - totalLevelWidth - 10;
+
+    ctx.font = '20px Arial';
+    ctx.fillText(levelText, levelStartX + levelTextWidth / 2, 10);
+
+    ctx.font = '28px Arial';
+    ctx.fillText(level, levelStartX + levelTextWidth + levelNumWidth / 2, 6);
 }
 
 function drawGameOver(score) {
