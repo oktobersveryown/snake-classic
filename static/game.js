@@ -12,6 +12,47 @@ const gameState = {
     paused: false,
 };
 
+const snakeHeadImages = {
+    up: new Image(),
+    down: new Image(),
+    left: new Image(),
+    right: new Image()
+};
+snakeHeadImages.up.src = 'static/assets/snake/head_up.png';
+snakeHeadImages.down.src = 'static/assets/snake/head_down.png';
+snakeHeadImages.left.src = 'static/assets/snake/head_left.png';
+snakeHeadImages.right.src = 'static/assets/snake/head_right.png';
+
+const snakeTailImages = {
+    up: new Image(),
+    down: new Image(),
+    left: new Image(),
+    right: new Image()
+};
+snakeTailImages.up.src = 'static/assets/snake/tail_up.png';
+snakeTailImages.down.src = 'static/assets/snake/tail_down.png';
+snakeTailImages.left.src = 'static/assets/snake/tail_left.png';
+snakeTailImages.right.src = 'static/assets/snake/tail_right.png';
+
+const snakeBodyImages = {
+    horizontal: new Image(),
+    vertical: new Image(),
+    top_left: new Image(),
+    top_right: new Image(),
+    bottom_left: new Image(),
+    bottom_right: new Image()
+};
+snakeBodyImages.horizontal.src = 'static/assets/snake/body_horizontal.png';
+snakeBodyImages.vertical.src = 'static/assets/snake/body_vertical.png';
+snakeBodyImages.top_left.src = 'static/assets/snake/body_bottomright.png'; // small fix for now
+snakeBodyImages.top_right.src = 'static/assets/snake/body_bottomleft.png'; // small fix for now
+snakeBodyImages.bottom_left.src = 'static/assets/snake/body_topright.png'; // small fix for now
+snakeBodyImages.bottom_right.src = 'static/assets/snake/body_topleft.png'; // small fix for now
+
+const fruitImage = new Image();
+fruitImage.src = 'static/assets/fruits/apple.png';
+
+
 function startGame() {
     showGame();
     resetGame();
@@ -114,7 +155,7 @@ function update() {
             const fruit = food.type;
             gameState.score += fruit.score;
             gameState.fruitsEaten++;
-            
+
             const oldLevel = gameState.level;
             gameState.level = Math.floor(gameState.fruitsEaten / FRUITS_PER_LEVEL) + 1;
 
@@ -136,10 +177,10 @@ function update() {
                     }
                 }
             }
-            
+
             generateFood(); // Generate new food
             ateFood = true;
-            break; 
+            break;
         }
     }
 
@@ -147,7 +188,7 @@ function update() {
         gameState.snake.pop();
     }
 
-    draw(gameState.snake, gameState.foods, gameState.score, gameState.level);
+    draw(gameState.snake, gameState.foods, gameState.score, gameState.level, gameState.direction);
 }
 
 function isCollision(head) {

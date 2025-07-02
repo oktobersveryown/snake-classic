@@ -1,4 +1,4 @@
-function draw(snake, foods, score, level) {
+function draw(snake, foods, score, level, direction) {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -27,17 +27,79 @@ function draw(snake, foods, score, level) {
     }
 
     // Draw snake
-    for (let i = 0; i < snake.length; i++) {
-        ctx.fillStyle = i === 0 ? '#2ecc71' : '#27ae60'; // Brighter green
-        ctx.fillRect(snake[i].x * GRID_SIZE, snake[i].y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
-        ctx.strokeStyle = '#2c3e50'; // Grid lines
-        ctx.strokeRect(snake[i].x * GRID_SIZE, snake[i].y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+    if (snake.length === 0) return;
+
+    // Draw Head
+    const head = snake[0];
+    ctx.drawImage(snakeHeadImages[direction], head.x * GRID_SIZE, head.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+
+    // Draw Body
+    for (let i = 1; i < snake.length - 1; i++) {
+        const prev = snake[i - 1];
+        const current = snake[i];
+        const next = snake[i + 1];
+        let bodyImage;
+
+        // Straight pieces
+        if (prev.x === next.x) {
+            bodyImage = snakeBodyImages.vertical;
+        } else if (prev.y === next.y) {
+            bodyImage = snakeBodyImages.horizontal;
+        }
+        // Corner pieces
+        else {
+            const prev_is_above = prev.y < current.y;
+            const prev_is_below = prev.y > current.y;
+            const prev_is_left = prev.x < current.x;
+            const prev_is_right = prev.x > current.x;
+
+            const next_is_above = next.y < current.y;
+            const next_is_below = next.y > current.y;
+            const next_is_left = next.x < current.x;
+            const next_is_right = next.x > current.x;
+
+            if ((prev_is_above && next_is_right) || (prev_is_right && next_is_above)) {
+                bodyImage = snakeBodyImages.bottom_left;
+            } else if ((prev_is_above && next_is_left) || (prev_is_left && next_is_above)) {
+                bodyImage = snakeBodyImages.bottom_right;
+            } else if ((prev_is_below && next_is_right) || (prev_is_right && next_is_below)) {
+                bodyImage = snakeBodyImages.top_left;
+            } else if ((prev_is_below && next_is_left) || (prev_is_left && next_is_below)) {
+                bodyImage = snakeBodyImages.top_right;
+            }
+        }
+        
+        if (bodyImage) {
+            ctx.drawImage(bodyImage, current.x * GRID_SIZE, current.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+        }
+    }
+
+    // Draw Tail
+    if (snake.length > 1) {
+        const tail = snake[snake.length - 1];
+        const before_tail = snake[snake.length - 2];
+        let tail_direction;
+
+        if (before_tail.x < tail.x) {
+            tail_direction = 'right'; // Snake moving left, tail points right
+        } else if (before_tail.x > tail.x) {
+            tail_direction = 'left'; // Snake moving right, tail points left
+        } else if (before_tail.y < tail.y) {
+            tail_direction = 'down'; // Snake moving up, tail points down
+        } else {
+            tail_direction = 'up'; // Snake moving down, tail points up
+        }
+        ctx.drawImage(snakeTailImages[tail_direction], tail.x * GRID_SIZE, tail.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
     }
 
     // Draw foods
     for (const food of foods) {
-        ctx.fillStyle = food.type.color;
-        ctx.fillRect(food.x * GRID_SIZE, food.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+        if (food.type === FRUIT_TYPES.APPLE) {
+            ctx.drawImage(fruitImage, food.x * GRID_SIZE, food.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+        } else {
+            ctx.fillStyle = food.type.color;
+            ctx.fillRect(food.x * GRID_SIZE, food.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+        }
     }
 
     // Draw score

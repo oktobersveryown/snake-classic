@@ -27,6 +27,11 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
     - [x] Allow players to choose between two different fruits at higher levels (e.g., starting at level 5).
 - [ ] **Sound Effects:** Add sound effects for eating food, game over, and other events.
 - [ ] **Visual Effects:** Implement visual effects like screen shake or particle effects to enhance the player experience.
+- [x] **Snake Assets:** Add custom graphics or sprites for the snake.
+- [ ] **Fruit Assets:** Add fruit assets for the fruit, super fruit and bomb.
+- [ ] **Speed Scaling:** Adjust speed to scale up faster for a more challenging experience.
+- [ ] **Snake Color Options:** Allow players to choose their snake color before starting the game.
+- [ ] **Changing Map:** Implement maps that change layout or obstacles as the game progresses.
 
 ## How to Run
 
@@ -61,3 +66,7 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
     flask run
     ```
 6.  **Open your browser and go to `http://127.0.0.1:5000` to play.**
+
+## Attribution
+
+*   Snake and fruit assets by [clearcode](https://opengameart.org/content/snake-game-assets) on OpenGameArt.org.
