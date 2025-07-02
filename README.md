@@ -13,6 +13,7 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
 ## Future Plans
 
 - [x] **Design:** Make the frame look like a brick 🧱 wall with alternating colors.
+    - [x] **Favicon** Add a favicon
 - [x] **Gameplay:**
     - [x] Separate level from score.
     - [x] Display level in the top-right corner.
