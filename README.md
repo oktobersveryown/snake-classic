@@ -18,6 +18,7 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
     - [x] Display level in the top-right corner.
     - [x] Increase speed every 3 levels.
     - [x] Snake starts in a random direction.
+    - [ ] Add a winning condtion.
 - [x] **Fruit Variety:**
     - [x] Add different fruits with unique effects:
         - 🍎 **Apple (Red):** Standard fruit, snake grows by 1.
@@ -33,6 +34,7 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
 - [ ] **Speed Scaling:** Adjust speed to scale up faster for a more challenging experience.
 - [ ] **Snake Color Options:** Allow players to choose their snake color before starting the game.
 - [ ] **Changing Map:** Implement maps that change layout or obstacles as the game progresses.
+- [ ] **Frame Scaling** Have frame scale depending on screen size.
 
 ## How to Run
 
