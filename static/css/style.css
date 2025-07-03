@@ -90,3 +90,40 @@ button:hover {
     text-align: center;
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
+
+#mobile-controls {
+    display: none; /* Hidden by default */
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.controls-grid {
+    display: grid;
+    grid-template-areas:
+        ". up ."
+        "left down right";
+    gap: 10px;
+    width: 240px; /* Increased width for better spacing */
+}
+
+.control-button {
+    padding: 20px; /* Increased padding for larger buttons */
+    font-size: 28px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 12px; /* More rounded corners */
+    cursor: pointer;
+    text-align: center;
+}
+
+#upButton { grid-area: up; }
+#leftButton { grid-area: left; }
+#downButton { grid-area: down; }
+#rightButton { grid-area: right; }
+
+@media (max-width: 600px) {
+    #mobile-controls {
+        display: grid;
+    }
+}

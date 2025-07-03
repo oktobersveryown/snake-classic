@@ -23,7 +23,7 @@ Play the game here: [https://neonyirenda.pythonanywhere.com/](https://neonyirend
     - [x] Display level in the top-right corner.
     - [x] Increase speed every 3 levels.
     - [x] Snake starts in a random direction.
-    - [ ] Add mobile controls 
+    - [x] Add mobile controls 
     - [ ] Add a winning condtion.
 - [x] **Fruit Variety:**
     - [x] Add different fruits with unique effects:

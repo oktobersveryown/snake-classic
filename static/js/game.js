@@ -235,6 +235,20 @@ document.getElementById('quitButton').addEventListener('click', () => {
     showMenu();
 });
 
+// Mobile controls
+document.getElementById('upButton').addEventListener('click', () => {
+    if (gameState.direction !== 'down') gameState.direction = 'up';
+});
+document.getElementById('leftButton').addEventListener('click', () => {
+    if (gameState.direction !== 'right') gameState.direction = 'left';
+});
+document.getElementById('downButton').addEventListener('click', () => {
+    if (gameState.direction !== 'up') gameState.direction = 'down';
+});
+document.getElementById('rightButton').addEventListener('click', () => {
+    if (gameState.direction !== 'left') gameState.direction = 'right';
+});
+
 
 // Initial setup
 showMenu();
