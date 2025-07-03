@@ -50,8 +50,11 @@ snakeBodyImages.bottom_left.src = 'static/assets/snake/body_topright.png'; // sm
 snakeBodyImages.bottom_right.src = 'static/assets/snake/body_topleft.png'; // small fix for now
 
 const fruitImage = new Image();
+const superFruitImage = new Image();
+const rottenFruitImage = new Image();
 fruitImage.src = 'static/assets/fruits/apple.png';
-
+superFruitImage.src = 'static/assets/fruits/super_apple.png';
+rottenFruitImage.src = 'static/assets/fruits/rotten_apple.png';
 
 function startGame() {
     showGame();
