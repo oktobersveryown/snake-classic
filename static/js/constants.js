@@ -2,7 +2,7 @@ const GRID_SIZE = 20;
 const WALL_THICKNESS = 2;
 const INITIAL_SPEED = 200;
 const SPEED_INCREMENT = -25;
-const FRUITS_PER_LEVEL = 5;
+const FRUITS_PER_LEVEL = 3;
 const LEVELS_PER_SPEED_INCREASE = 3;
 
 const FRUIT_TYPES = {

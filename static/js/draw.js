@@ -94,9 +94,19 @@ function draw(snake, foods, score, level, direction) {
 
     // Draw foods
     for (const food of foods) {
+        let imageToDraw;
         if (food.type === FRUIT_TYPES.APPLE) {
-            ctx.drawImage(fruitImage, food.x * GRID_SIZE, food.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
+            imageToDraw = fruit.apple;
+        } else if (food.type === FRUIT_TYPES.ROTTEN_APPLE) {
+            imageToDraw = fruit.rotten_apple;
+        } else if (food.type === FRUIT_TYPES.SPECIAL_APPLE) {
+            imageToDraw = fruit.super_apple;
+        }
+
+        if (imageToDraw) {
+            ctx.drawImage(imageToDraw, food.x * GRID_SIZE, food.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
         } else {
+            // Fallback to colored squares if image not found
             ctx.fillStyle = food.type.color;
             ctx.fillRect(food.x * GRID_SIZE, food.y * GRID_SIZE, GRID_SIZE, GRID_SIZE);
         }
