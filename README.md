@@ -4,7 +4,7 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
 
 ## Live Demo
 
-Play the game here: [https://neonyirenda.pythonanywhere.com/](https://neonyirenda.pythonanywhere.com/)
+Play the game here: [https://neonyirenda.pythonanywhere.com/](https://neonyirenda.pythonanywhere.com/) Leave your highscore 😉
 
 ## Features
 
