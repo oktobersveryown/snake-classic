@@ -2,6 +2,10 @@
 
 A classic snake game built with a Python Flask backend and a JavaScript frontend.
 
+## Live Demo
+
+Play the game here: [https://neonyirenda.pythonanywhere.com/](https://neonyirenda.pythonanywhere.com/)
+
 ## Features
 
 *   **Classic Snake Gameplay:** Control the snake to eat food and grow longer.
@@ -34,6 +38,7 @@ A classic snake game built with a Python Flask backend and a JavaScript frontend
 - [x] **Fruit Assets:** Add fruit assets for the fruit, super fruit and bomb.
 - [x] **Code Refactoring:**
     - [x] Centralize asset loading in `assets.js`.
+    - [x] Rename `api.js` to `highscoreService.js` for better clarity.
 - [x] **Speed Scaling:** Adjust speed to scale up faster for a more challenging experience.
 - [ ] **Snake Color Options:** Allow players to choose their snake color before starting the game.
 - [ ] **Changing Map:** Implement maps that change layout or obstacles as the game progresses.
